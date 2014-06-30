@@ -87,7 +87,7 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
+		'adminEmail'=>'cumt.xiaochi@gmail.com',
         'upload_root' => dirname(__DIR__).'/runtime/upload'
 	),
 );

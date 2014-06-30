@@ -70,29 +70,12 @@ class PptController extends Controller
 		if(isset($_POST['Ppt']))
 		{
 			$model->attributes=$_POST['Ppt'];
-//            var_dump($_POST);
             if (!isset($_FILES['Ppt']['name']['url'])) {
                 $this->jsAlert('请选择文件');
             }
-            $upload_root = Yii::app()->params['upload_root'];
-            $root = $upload_root . '/' . date('Ymd');
-            if (!is_dir($root)) {
-//                Yii::app()->log->
-                if (is_file($root)) {
-                    die(dirname(__FILE__).':'.__LINE__." $root is file not dir");
-                }
-                mkdir($root, 0777, true);
-            }
-            $content = file_get_contents($_FILES['Ppt']['tmp_name']['url']);
-            $len_in = strlen($content);
-            $len = file_put_contents($root .'/'.microtime().'.pdf', $content);
-            if ($len != $len_in) {
-                die(dirname(__FILE__).':'.__LINE__." $len $len_in not match, write not enough");
-            }
-            echo $len;
-            echo '<pre>';
-            var_dump($_FILES);exit;
-            $model->created = date('Y-m-d');
+            $url = $this->upload();
+            $model->url = $url;
+            $model->created = date('Y-m-d H:i:s');
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -199,4 +182,31 @@ class PptController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+    /**
+     * 上传文件
+     * @return string
+     */
+    private function upload()
+    {
+        $upload_root = Yii::app()->params['upload_root'];
+        $date = '/' . date('Ymd');
+        $root = $upload_root . $date;
+        if (!is_dir($root)) {
+//                Yii::app()->log->
+            if (is_file($root)) {
+                die(dirname(__FILE__) . ':' . __LINE__ . " $root is file not dir");
+            }
+            mkdir($root, 0777, true);
+        }
+        $content = file_get_contents($_FILES['Ppt']['tmp_name']['url']);
+        $len_in = strlen($content);
+        $path = '/' . microtime() . '.pdf';
+        $url = $root . $path;
+        $len = file_put_contents($url, $content);
+        if ($len != $len_in) {
+            die(dirname(__FILE__) . ':' . __LINE__ . " $len $len_in not match, write not enough");
+        }
+        return $date.$path;
+    }
 }
