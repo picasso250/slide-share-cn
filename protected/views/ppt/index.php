@@ -17,7 +17,7 @@ $this->menu=array(
     <?php foreach ($dataProvider->getData() as $k => $item): ?>
     <li>
         <div>
-            <a href="?r=ppt/view&amp;id=<?= $item->id ?>"><?= $item->name ?></a>
+            <strong><a href="?r=ppt/view&amp;id=<?= $item->id ?>"><?= $item->name ?></a></strong>
         </div>
         <a href="<?= Yii::app()->params['upload_url'].$item->url ?>">link</a>
         <div><?= $item->created ?></div>
@@ -25,7 +25,18 @@ $this->menu=array(
     <?php endforeach ?>
 </ul>
 
-<?php $this->widget('zii.widgets.CListView', array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
-)); ?>
+<?php
+$pager=array();
+$class='CLinkPager';
+
+$pager['pages']=$dataProvider->getPagination();
+
+if($pager['pages']->getPageCount()>1)
+{
+    echo '<div class="'.'pager'.'">';
+    $this->widget($class,$pager);
+    echo '</div>';
+}
+else
+    $this->widget($class,$pager);
+?>
