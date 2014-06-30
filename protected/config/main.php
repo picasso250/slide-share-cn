@@ -88,6 +88,7 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'cumt.xiaochi@gmail.com',
-        'upload_root' => dirname(__DIR__).'/runtime/upload'
+        'upload_root' => dirname(dirname(__DIR__)).'/assets/upload',
+        'upload_url' => '/assets/upload',
 	),
 );

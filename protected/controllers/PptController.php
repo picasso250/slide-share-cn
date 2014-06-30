@@ -137,7 +137,7 @@ class PptController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Ppt');
+        $dataProvider=new CActiveDataProvider('Ppt');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));

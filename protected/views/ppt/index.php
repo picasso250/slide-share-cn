@@ -13,6 +13,18 @@ $this->menu=array(
 
 <h1>Ppts</h1>
 
+<ul>
+    <?php foreach ($dataProvider->getData() as $k => $item): ?>
+    <li>
+        <div>
+            <a href="?r=ppt/view&amp;id=<?= $item->id ?>"><?= $item->name ?></a>
+        </div>
+        <a href="<?= Yii::app()->params['upload_url'].$item->url ?>">link</a>
+        <div><?= $item->created ?></div>
+    </li>
+    <?php endforeach ?>
+</ul>
+
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
