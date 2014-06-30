@@ -1,0 +1,8 @@
+2014/06/30 12:06:52 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "admin/admin".' in D:\yii-master\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\yii-master\framework\web\CWebApplication.php(141): CWebApplication->runController('admin/admin')
+#1 D:\yii-master\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 D:\slide_share_cn\ss_src\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/index.php?r=admin/admin
+---
