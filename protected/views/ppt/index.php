@@ -8,7 +8,6 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Create Ppt', 'url'=>array('create')),
-	array('label'=>'Manage Ppt', 'url'=>array('admin')),
 );
 ?>
 

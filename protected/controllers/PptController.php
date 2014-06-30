@@ -62,15 +62,18 @@ class PptController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Ppt;
+        Yii::log('create', CLogger::LEVEL_INFO);
+        $model=new Ppt;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Ppt']))
 		{
-			$model->attributes=$_POST['Ppt'];
+            Yii::log('start create', CLogger::LEVEL_INFO);
+            $model->attributes=$_POST['Ppt'];
             if (!isset($_FILES['Ppt']['name']['url'])) {
+                Yii::log('no $_FILES[Ppt]', CLogger::LEVEL_ERROR);
                 $this->jsAlert('请选择文件');
             }
             $url = $this->upload();
@@ -193,9 +196,10 @@ class PptController extends Controller
         $date = '/' . date('Ymd');
         $root = $upload_root . $date;
         if (!is_dir($root)) {
-//                Yii::app()->log->
+                Yii::log("$root is not dir", CLogger::LEVEL_WARNING);
             if (is_file($root)) {
-                die(dirname(__FILE__) . ':' . __LINE__ . " $root is file not dir");
+                Yii::log("$root is file", CLogger::LEVEL_ERROR);
+                return '';
             }
             mkdir($root, 0777, true);
         }
@@ -205,7 +209,8 @@ class PptController extends Controller
         $url = $root . $path;
         $len = file_put_contents($url, $content);
         if ($len != $len_in) {
-            die(dirname(__FILE__) . ':' . __LINE__ . " $len $len_in not match, write not enough");
+            Yii::log(" $len $len_in not match, write not enough", CLogger::LEVEL_WARNING);
+            return '';
         }
         return $date.$path;
     }
