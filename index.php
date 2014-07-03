@@ -9,13 +9,15 @@ defined('DEBUG') or define('DEBUG',true);
 require_once __DIR__ . '/vendor/autoload.php';
 
 $config = require (__DIR__.'/protected/config/main.php');
-$db_config = $config['db'];
-ORM::configure($db_config);
+$db_config = $config['components']['db'];
+ORM::configure($db_config['connectionString']);
+ORM::configure('username', $db_config['username']);
+ORM::configure('password', $db_config['password']);
+ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$db_config['charset']));
 
 $klein = new \Klein\Klein();
 
 $klein->respond(function () {
-    return 'All the things';
 });
 
 $klein->respond('GET', '/', function () {
@@ -33,7 +35,7 @@ $klein->respond('GET', '/mem/', function ($request) {
     $list = ORM::for_table('mem')
         ->order_by_desc('id')
         ->limit(7)
-        ->find_array();
+        ->find_many();
     include __DIR__.'/protected/views/mem/list.phtml';
 });
 $klein->respond('GET', '/mem/add', function ($request) {
