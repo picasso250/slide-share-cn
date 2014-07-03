@@ -1,7 +1,7 @@
 <?php
 
 // change the following paths if necessary
-$config=dirname(__FILE__).'/protected/config/main.php';
+
 
 // remove the following lines when in production mode
 defined('DEBUG') or define('DEBUG',true);
@@ -9,6 +9,9 @@ defined('DEBUG') or define('DEBUG',true);
 require_once __DIR__ . '/vendor/autoload.php';
 
 $config = require (__DIR__.'/protected/config/main.php');
+if (isset($_SERVER['HTTP_APPNAME'])) {
+    $config = array_merge($config, require __DIR__.'/protected/config/server.php');
+}
 $db_config = $config['components']['db'];
 ORM::configure($db_config['connectionString']);
 ORM::configure('username', $db_config['username']);
