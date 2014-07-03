@@ -46,7 +46,7 @@ $klein->respond('POST', '/mem/add', function ($request) {
     $mem->content = $request->content;
     $mem->created = date('Y-m-d H:i:s');
     $mem->save();
-    header('Location:/mem/list');
+    header('Location:/mem/');
     exit;
 });
 
