@@ -1,0 +1,8 @@
+<ul>
+    <?php foreach ($list as $e): ?>
+    <li>
+        <p><?= htmlspecialchars($e->name) ?></p>
+        <a href="<?= htmlspecialchars($config['params']['upload_url'].$e->url) ?>" target="_blank">link</a>
+    </li>
+    <?php endforeach ?>
+</ul>
