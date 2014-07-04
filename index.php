@@ -17,7 +17,8 @@ $db_config = $config['components']['db'];
 ORM::configure($db_config['connectionString']);
 ORM::configure('username', $db_config['username']);
 ORM::configure('password', $db_config['password']);
-ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$db_config['charset']));
+$options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . $db_config['charset']);
+ORM::configure('driver_options', $options);
 
 $klein = new \Klein\Klein();
 
@@ -36,7 +37,7 @@ $klein->respond('GET', '/slide/[:id]', function ($request) {
 });
 $klein->respond('POST', '/upload', function ($request) use ($config) {
     $ppt = ORM::for_table('ppt')->create();
-    $ppt->name = $request->name;
+    $ppt->name = html_entity_decode($request->name);
     if (!isset($_FILES['url']['name'])) {
         plog('no $_FILES[url]', 'LEVEL_ERROR');
         die('请选择文件');
