@@ -33,7 +33,6 @@ function upload($upload_root, $url)
         mkdir($root, 0777, true);
     }
     $content = file_get_contents($url);
-    var_dump(strlen($content));exit;
     $len_in = strlen($content);
     $path = '/' . microtime() . '.pdf';
     $url = $root . $path;
